@@ -65,4 +65,4 @@ const productData = {
 const printPropertyValue = (obj, key) => {
     return obj[key];
 };
-console.log(printPropertyValue({ name: "tanjim", age: 22 }, "name"));
+// console.log(printPropertyValue({name: "tanjim", age: 22}, "name"))
