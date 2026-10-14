@@ -103,5 +103,66 @@ const configuration = {
 const getUserIdentity = (obj, param) => {
     return obj[param];
 };
-console.log(getUserIdentity({ name: "WalidurTanjim", email: "walidur@gmail.com" }, "name"));
-console.log(getUserIdentity({ name: "ASUS TUF Gaming A15", price: 95500 }, "price"));
+const myNewUser = {
+    name: "Robert",
+    address: "Dhaka"
+};
+// ২. একটি জেনেরিক ফাংশন লেখো যা ইনপুট হিসেবে যেকোনো ধরনের অবজেক্ট এবং একটি চাবি (key) গ্রহণ করবে, কিন্তু চাবিটি যদি অবজেক্টের ভেতর না থাকে তবে টাইপ স্ক্রিপ্ট যেন কম্পাইল টাইমেই এরর দেয়।
+const existingKey = (obj, param) => {
+    return obj[param];
+};
+// console.log(existingKey({ name: "AA", age: 5}, "name"));
+// console.log(existingKey({ quantity: 5, price: 150}, "name"));
+// ৩. এমন একটি কাস্টম টাইপ বা ইন্টারফেস বানাও যা একই সাথে একটি সাধারণ অবজেক্ট এবং একটি ফাংশন উভয় হিসেবেই কাজ করতে পারবে (callable object)।
+// ৪. একটি readonly টিউপল (Tuple) তৈরি করো যেখানে প্রথম উপাদানটি হবে স্ট্রিং (নাম) এবং দ্বিতীয় উপাদানটি হবে নাম্বার (বয়স), এবং as const ব্যবহার করে সেটিকে সম্পূর্ণ ইমিউটেবল করে দেখাও।
+const readonlyTuple = ["WalidurTanjim", 26];
+const myNewEmployee = {
+    name: "Robert",
+    email: "robert@gamil.com",
+    salary: 75000,
+    phone: 500
+};
+// ৬. একটি জেনেরিক ইন্টারফেস তৈরি করো যার ভেতরে একটি ডেটা প্রপার্টি থাকবে, এবং সেই ডেটার টাইপটি ডিফল্টভাবে একটি অ্যারে (T[]) হিসেবে সেট করা থাকবে যদি না অন্য কিছু পাস করা হয়।
+// ৭. এমন একটি এনাম (Enum) এবং একটি ফাংশন তৈরি করো যেখানে ফাংশনটি শুধুমাত্র ওই এনামের নির্দিষ্ট কিছু মান আর্গুমেন্ট হিসেবে গ্রহণ করবে, সব মান নয়।
+var CRUD;
+(function (CRUD) {
+    CRUD["Create"] = "CREATE";
+    CRUD["Read"] = "READ";
+    CRUD["Update"] = "UPDATE";
+    CRUD["Delete"] = "DELETE";
+})(CRUD || (CRUD = {}));
+const specificEnumProperty = (role) => {
+    return role;
+};
+// const myUserAge: CombineAge = {
+//     isMarried: false,
+//     isStudent: true,
+//     age: 26
+// }
+// ৯. একটি ফাংশন লিখুন যা ইনপুট হিসেবে স্ট্রিং অথবা নাম্বার নিতে পারে (Union Type), কিন্তু ফাংশনের ভেতর টাইপ গার্ড (Type Guard) ব্যবহার করে নিশ্চিত করতে হবে যে ইনপুট স্ট্রিং হলে তার লেন্থ এবং নাম্বার হলে তার স্কয়ার রিটার্ন করবে।
+const returnTypeGuard = (value) => {
+    if (typeof value === "number") {
+        return value * 2;
+    }
+    if (typeof value === "string") {
+        return value.length;
+    }
+    return 'Please enter a string or number';
+};
+// console.log(returnTypeGuard("name"))
+// console.log(returnTypeGuard(5))
+// ১০. একটি অবজেক্ট লিটারেল তৈরি করে সেটিতে as const প্রয়োগ করার পর, তার ভেতরের একটি নেস্টেড প্রপার্টির টাইপ এক্সট্র্যাক্ট করার জন্য typeof এবং জেনেরিক লুকআপ টাইপ কীভাবে ব্যবহার করতে হবে তা প্রবলেম আকারে সমাধান করো।
+const appConfig = {
+    appName: "TypeScript Learning",
+    version: 1.0,
+    dbConfig: {
+        host: "localhost",
+        port: 5432,
+        isSecure: true
+    }
+};
+const myNewConfig = {
+    host: "localhost",
+    port: 5432,
+    isSecure: true
+};

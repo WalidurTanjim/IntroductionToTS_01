@@ -212,3 +212,110 @@ const getUserIdentity = <T, K extends keyof T>(obj: T, param: K): T[K] => {
 // console.log(getUserIdentity({name: "WalidurTanjim", email: "walidur@gmail.com"}, "name"))
 // console.log(getUserIdentity({name: "ASUS TUF Gaming A15", price: 95500}, "price"))
 
+// ১. একটি ইউজার অবজেক্টের টাইপ অ্যালিয়াস তৈরি করো, যেখানে address প্রপার্টিটি এমন হবে যা প্রথমে ঐচ্ছিক (optional) থাকবে, কিন্তু একবার সেট করলে সেটি আর পরিবর্তন বা মিউট করা যাবে না (readonly)।
+type TrickyUser = {
+    name: string;
+    readonly address?: string;
+};
+const myNewUser: TrickyUser = {
+    name: "Robert",
+    address: "Dhaka"
+}
+
+// ২. একটি জেনেরিক ফাংশন লেখো যা ইনপুট হিসেবে যেকোনো ধরনের অবজেক্ট এবং একটি চাবি (key) গ্রহণ করবে, কিন্তু চাবিটি যদি অবজেক্টের ভেতর না থাকে তবে টাইপ স্ক্রিপ্ট যেন কম্পাইল টাইমেই এরর দেয়।
+const existingKey = <T, K extends keyof T> (obj: T, param: K): T[K] => {
+    return obj[param]
+}
+// console.log(existingKey({ name: "AA", age: 5}, "name"));
+// console.log(existingKey({ quantity: 5, price: 150}, "name"));
+
+// ৩. এমন একটি কাস্টম টাইপ বা ইন্টারফেস বানাও যা একই সাথে একটি সাধারণ অবজেক্ট এবং একটি ফাংশন উভয় হিসেবেই কাজ করতে পারবে (callable object)।
+
+
+// ৪. একটি readonly টিউপল (Tuple) তৈরি করো যেখানে প্রথম উপাদানটি হবে স্ট্রিং (নাম) এবং দ্বিতীয় উপাদানটি হবে নাম্বার (বয়স), এবং as const ব্যবহার করে সেটিকে সম্পূর্ণ ইমিউটেবল করে দেখাও।
+const readonlyTuple: readonly [string, number] = ["WalidurTanjim", 26] as const;
+// readonlyTuple[0] = "WalidurTanjim";
+
+// ৫. একটি ইন্টারফেস চেইন তৈরি করো যেখানে Employee ইন্টারফেসটি Person এবং ContactNo উভয় ইন্টারফেসকেই একত্রে এক্সটেন্ড (multiple extends) করবে।
+interface Person {
+    salary: number;
+}
+interface ContactNo {
+    phone: number
+}
+interface Employee extends Person, ContactNo {
+    name: string;
+    email: string;
+}
+const myNewEmployee: Employee = {
+    name: "Robert",
+    email: "robert@gamil.com",
+    salary: 75000,
+    phone: 500
+}
+
+// ৬. একটি জেনেরিক ইন্টারফেস তৈরি করো যার ভেতরে একটি ডেটা প্রপার্টি থাকবে, এবং সেই ডেটার টাইপটি ডিফল্টভাবে একটি অ্যারে (T[]) হিসেবে সেট করা থাকবে যদি না অন্য কিছু পাস করা হয়।
+
+
+// ৭. এমন একটি এনাম (Enum) এবং একটি ফাংশন তৈরি করো যেখানে ফাংশনটি শুধুমাত্র ওই এনামের নির্দিষ্ট কিছু মান আর্গুমেন্ট হিসেবে গ্রহণ করবে, সব মান নয়।
+enum CRUD {
+    Create = "CREATE",
+    Read = "READ",
+    Update = "UPDATE",
+    Delete = "DELETE"
+}
+const specificEnumProperty = (role: CRUD.Create | CRUD.Read) : CRUD.Create | CRUD.Read  => {
+    return role;
+}
+// console.log(specificEnumProperty(CRUD.Read))
+
+// ৮. দুটি ভিন্ন ইন্টারফেসে একই নামের প্রপার্টি রয়েছে (কিন্তু তাদের টাইপ আলাদা), ইন্টারসেকশন অপারেটর (&) ব্যবহার করে তাদের একত্রিত করলে টাইপ স্ক্রিপ্ট কী ধরনের বিহেভিয়ার দেখায় তা একটি প্রবলেমের মাধ্যমে ফুটিয়ে তোলো।
+interface NumberAge {
+    age: number,
+    isMarried: boolean
+}
+interface StringAge {
+    age: string;
+    isStudent: boolean
+}
+type CombineAge = NumberAge & StringAge;
+
+// const myUserAge: CombineAge = {
+//     isMarried: false,
+//     isStudent: true,
+//     age: 26
+// }
+
+
+// ৯. একটি ফাংশন লিখুন যা ইনপুট হিসেবে স্ট্রিং অথবা নাম্বার নিতে পারে (Union Type), কিন্তু ফাংশনের ভেতর টাইপ গার্ড (Type Guard) ব্যবহার করে নিশ্চিত করতে হবে যে ইনপুট স্ট্রিং হলে তার লেন্থ এবং নাম্বার হলে তার স্কয়ার রিটার্ন করবে।
+const returnTypeGuard = (value: string | number) : string | number => {
+    if(typeof value === "number") {
+        return value*2;
+    }
+    if(typeof value === "string") {
+        return value.length;
+    }
+    return 'Please enter a string or number';
+}
+// console.log(returnTypeGuard("name"))
+// console.log(returnTypeGuard(5))
+
+// ১০. একটি অবজেক্ট লিটারেল তৈরি করে সেটিতে as const প্রয়োগ করার পর, তার ভেতরের একটি নেস্টেড প্রপার্টির টাইপ এক্সট্র্যাক্ট করার জন্য typeof এবং জেনেরিক লুকআপ টাইপ কীভাবে ব্যবহার করতে হবে তা প্রবলেম আকারে সমাধান করো।
+const appConfig = {
+    appName: "TypeScript Learning",
+    version: 1.0,
+    dbConfig: {
+        host: "localhost",
+        port: 5432,
+        isSecure: true
+    }
+} as const;
+
+type AppConfigType = typeof appConfig;
+type DBConfigType = typeof appConfig["dbConfig"];
+type HostConfigType = typeof appConfig["dbConfig"]["host"];
+const myNewConfig: DBConfigType = {
+    host: "localhost",
+    port: 5432,
+    isSecure: true
+}
